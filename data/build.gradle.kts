@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -21,10 +22,24 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
+    implementation(project(":domain"))
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp.logging.interceptor)
+
+    // Tests
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.okhttp.mockwebserver)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 }
